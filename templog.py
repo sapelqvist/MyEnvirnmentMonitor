@@ -37,7 +37,11 @@
 
 # List of modules to import
 import time
-import gspread
+import sys, os
+try:
+    import gspread
+except ImportError:
+    sys.exit("Please install gspread. (cd gspread && sudo python setup.py install && cd ..)")
 import datetime
 from time import gmtime, strftime
 from math import floor
