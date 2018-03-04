@@ -10,7 +10,7 @@
 
 # GROUNDWORK
 #
-# This script assumes that you have a Google spreadsheet called 'Temperature'
+# This script assumes that you have a Google spreadsheet called 'MyEnvirnmentMonitor'
 # which has one or more tables called eg 'Study' &/or 'Garden'. The top row of
 # each table is reserved for headers, the first column is date formatted & the
 # next 24 columns are number formatted to 0.0 for the hourly temperature record
@@ -63,7 +63,7 @@ localtime = strftime("%H", gmtime())   # Comment this line out to test
 # reference the 'live file' that the temp sensor writes
 # Note that the FULL PATH is required for the crontab to run properly
 # & that each sensor has its own unique serial number
-temp_sensor_01 = '/sys/bus/w1/devices/28-0000066e6162/w1_slave'
+temp_sensor_01 = '/home/pi/w1-devices/warmbeddirt/w1_slave'
 
 # read the 2 lines from the 'live file'
 def temp_raw_01():
@@ -113,7 +113,7 @@ todaydb = datetime.date.today().strftime("%d/%m/%Y")
 # Note that the FULL PATH is required for the crontab to run properly
 # run 'sudo touch localdb.txt' before running the script & change the
 # name of the file if you have multiple sensors
-localdb = open('/hdd/Temperature/localdb.txt', 'a')
+localdb = open('/home/pi/MyEnvirnmentMonitor-data/localdb.txt', 'a')
 
 # Between midnight & 1 in the morning, localtime = 0
 # This is the trigger to add a new row in the db for the new day
@@ -146,8 +146,8 @@ localdb.close()
 # Login to Google Docs with my Google account
 gc = gspread.login('YOUR_GOOGLE_EMAIL_ADDRESS', 'YOUR_GOOGLE_PASSWORD')
 
-# Open the 'Garden' worksheet (sheet1)
-wks = gc.open("Temperature").worksheet("Garden")
+# Open the 'WarmbedDirt' worksheet (sheet1)
+wks = gc.open("MyEnvirnmentMonitor").worksheet("WarmbedDirt")
 
 # Set up the variables for the loop to find the correct hour's cell
 current_col = 'A'
